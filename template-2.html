@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>My iFrame</title>
+  <style type="text/css">
+    body {
+      color: white;
+      background: #6894d1;
+    }
+  </style>
+</head>
+<body ng-app="template">
+  <div ng-controller="IframeCtrl">
+    <small>template-2.html</small>
+    <h3>{{title}}</h3>
+    <p>{{content}}</p>
+  </div>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular-sanitize.min.js"></script>
+  <script>
+    angular.module('template', ['ngSanitize']).controller('IframeCtrl', function($scope) {
+      $scope.title = "Enter A Title";
+      $scope.content = "Type some content...";
+      window.updatecontent = function(content) {
+        $scope.$apply(function() {
+          $scope.content = content;
+        });
+      };
+      window.updatetitle = function(title) {
+        $scope.$apply(function() {
+          $scope.title = title;
+        });
+      };
+    });
+  </script>
+</body>
+</html>
