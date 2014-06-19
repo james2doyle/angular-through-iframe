@@ -1,7 +1,7 @@
 angular-through-iframe
 ======================
 
-How to use angular.js through an iframe
+How to use angular.js through an iframe. See the [live demo here](http://james2doyle.github.io/angular-through-iframe/).
 
 Example:
 
