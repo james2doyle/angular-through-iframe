@@ -21,6 +21,9 @@
       width: calc(700px + 2em);
       margin: 2em auto 0;
     }
+    p a {
+      color: #d84305;
+    }
     input, textarea, select, iframe {
       display: inline-block;
       vertical-align: top;
@@ -56,6 +59,7 @@
 <body ng-controller="FieldCtrl">
   <div class="wrapper">
     <h1>How To Use Angular.js through an iFrame</h1>
+    <p><a href="https://github.com/james2doyle/angular-through-iframe">View this project on Github!</a></p>
     <div class="container">
       <div>
         <select name="templates" ng-model="template" ng-change="loadTemplate()">
