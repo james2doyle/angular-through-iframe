@@ -63,8 +63,8 @@
           <option value="template-1.html">Template 1</option>
           <option value="template-2.html">Template 2</option>
         </select>
-        <input type="text" name="title" ng-model="title" ng-change="updateTitle()" value="" placeholder="The Title For This Page" />
-        <textarea name="content" ng-model="textarea" ng-change="updateContent()" placeholder="Content for this page"></textarea>
+        <input type="text" name="title" ng-model="title" my-change value="" placeholder="The Title For This Page" />
+        <textarea name="content" ng-model="textarea" my-change placeholder="Content for this page"></textarea>
       </div>
     </div>
     <div class="container">
@@ -74,11 +74,13 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular-sanitize.min.js"></script>
   <script>
-    angular.module('myApp', ['ngSanitize']).controller('FieldCtrl', function ($scope, $sce) {
-      var iframe = document.getElementById('iframe');
+    var iframe = document.getElementById('iframe');
+    var angularapp = angular.module('myApp', ['ngSanitize']);
+    angularapp.controller('FieldCtrl', function ($scope, $sce) {
       var iframeclass = '';
       $scope.loadTemplate = function() {
         if ($scope.template.length > 0) {
+          // add a class of which template we are in
           iframeclass = $scope.template.split('.')[0];
           iframe.classList.add(iframeclass);
           $scope.activeTemplate = $sce.trustAsResourceUrl($scope.template);
@@ -86,11 +88,17 @@
           iframe.classList.remove(iframeclass);
         }
       };
-      $scope.updateTitle = function () {
-        iframe.contentWindow.updatetitle($scope.title);
-      };
-      $scope.updateContent = function() {
-        iframe.contentWindow.updatecontent($scope.textarea);
+    });
+    // a custom directive in order to pass raw attributes from the trigger elements
+    angularapp.directive('myChange', function() {
+      return function(scope, element) {
+        element.bind('input', function() {
+          // the iframe function we are calling is called `update`
+          iframe.contentWindow.update({
+            name: element[0].name,
+            value: element[0].value
+          });
+        });
       };
     });
   </script>

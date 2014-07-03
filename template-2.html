@@ -20,16 +20,17 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular-sanitize.min.js"></script>
   <script>
     angular.module('template', ['ngSanitize']).controller('IframeCtrl', function($scope) {
-      $scope.title = "Enter A Title";
-      $scope.content = "Type some content...";
-      window.updatecontent = function(content) {
-        $scope.$apply(function() {
-          $scope.content = content;
-        });
+      // set some defaults for the start and when the passed input values are empty
+      var defaults = {
+        title: "Enter A Title",
+        content: "Type some content..."
       };
-      window.updatetitle = function(title) {
+      $scope.title = defaults.title;
+      $scope.content = defaults.content;
+      window.update = function(data) {
         $scope.$apply(function() {
-          $scope.title = title;
+          // use the data.value or the default when empty
+          $scope[data.name] = (data.value.length > 0) ? data.value: defaults[data.name];
         });
       };
     });
