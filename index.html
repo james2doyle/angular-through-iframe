@@ -54,6 +54,12 @@
     textarea {
       min-height: 96px;
     }
+    body select, body.loaded #loading {
+      display: none;
+    }
+    body #loading, body.loaded select {
+      display: inline;
+    }
   </style>
 </head>
 <body ng-controller="FieldCtrl">
@@ -68,6 +74,7 @@
           <option value="template-2.html">Template 2</option>
           <option value="template-3.html">Template 3</option>
         </select>
+        <input type="text" id="loading" placeholder="Loading..." />
         <input type="text" name="title" ng-model="title" my-change value="" placeholder="The Title For This Page" />
         <textarea name="content" ng-model="textarea" my-change placeholder="Content for this page"></textarea>
       </div>
@@ -82,6 +89,9 @@
     var iframe = document.getElementById('iframe');
     var angularapp = angular.module('myApp', ['ngSanitize']);
     angularapp.controller('FieldCtrl', function ($scope, $sce) {
+      angular.element(document).ready(function () {
+        document.body.className = "loaded";
+      });
       var iframeclass = '';
       $scope.loadTemplate = function() {
         if ($scope.template.length > 0) {
