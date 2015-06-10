@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>My iFrame</title>
+  <style type="text/css">
+    body {
+      color: white;
+      background: #FF00FF;
+    }
+  </style>
+</head>
+<body ng-app="template">
+  <div ng-controller="IframeCtrl">
+    <small>template-2.html</small>
+    <h3>{{title}}</h3>
+    <p>{{content}}</p>
+  </div>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular-sanitize.min.js"></script>
+  <script>
+    angular.module('template', ['ngSanitize']).controller('IframeCtrl', function($scope) {
+      // set some defaults for the start and when the passed input values are empty
+      var defaults = {
+        title: "Enter A Title",
+        content: "Type some content..."
+      };
+      $scope.title = defaults.title;
+      $scope.content = defaults.content;
+      window.update = function(data) {
+        $scope.$apply(function() {
+          // use the data.value or the default when empty
+          $scope[data.name] = (data.value.length > 0) ? data.value: defaults[data.name];
+        });
+      };
+    });
+  </script>
+</body>
+</html>
